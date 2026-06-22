@@ -1,0 +1,89 @@
+{
+  "hotels": [
+    {
+      "hotel": 40,
+      "name": "Ekavi Apartments",
+      "slug": "/tours/greece/ekavi-apartments",
+      "regionLName": "CRETE-CHANIA",
+      "stateLName": "GREECE",
+      "state": 16,
+      "starGroupName": "2*",
+      "image": {
+        "Img": "https://files.neckermann-nordic.dk/hotel/hotels/greece/ekavi-apartments/o48119?&hotelCode=40",
+        "Alt": "Ekavi Apartments-48119"
+      }
+    },
+    {
+      "hotel": 49,
+      "name": "Tivoli Hotel",
+      "slug": "/tours/greece/tivoli-hotel",
+      "regionLName": "RHODES",
+      "stateLName": "GREECE",
+      "state": 16,
+      "starGroupName": "3*",
+      "image": null
+    },
+    {
+      "hotel": 48,
+      "name": "Summer Dream Hotel",
+      "slug": "/tours/greece/summer-dream-hotel",
+      "regionLName": "RHODES",
+      "stateLName": "GREECE",
+      "state": 16,
+      "starGroupName": "3*",
+      "image": null
+    },
+    {
+      "hotel": 43,
+      "name": "Kavros Beach Hotel",
+      "slug": "/tours/greece/kavros-beach-hotel",
+      "regionLName": "CRETE-CHANIA",
+      "stateLName": "GREECE",
+      "state": 16,
+      "starGroupName": "3*",
+      "image": null
+    },
+    {
+      "hotel": 44,
+      "name": "Kavros Garden Hotel",
+      "slug": "/tours/greece/kavros-garden-hotel",
+      "regionLName": "CRETE-CHANIA",
+      "stateLName": "GREECE",
+      "state": 16,
+      "starGroupName": "3*",
+      "image": null
+    },
+    {
+      "hotel": 34,
+      "name": "All Senses Nautica Blue Exclusive Resort",
+      "slug": "/tours/greece/all-senses-nautica-blue-exclusive-resort",
+      "regionLName": "RHODES",
+      "stateLName": "GREECE",
+      "state": 16,
+      "starGroupName": "5*",
+      "image": null
+    },
+    {
+      "hotel": 47,
+      "name": "Resol Hotel",
+      "slug": "/tours/greece/resol-hotel",
+      "regionLName": "CRETE-RETHYMNO",
+      "stateLName": "GREECE",
+      "state": 16,
+      "starGroupName": "4*",
+      "image": null
+    },
+    {
+      "hotel": 42,
+      "name": "Hydramis Palace",
+      "slug": "/tours/greece/hydramis-palace",
+      "regionLName": "CRETE-CHANIA",
+      "stateLName": "GREECE",
+      "state": 16,
+      "starGroupName": "5*",
+      "image": null
+    }
+  ],
+  "destinations": [],
+  "scraped_at": "2026-06-22T10:39:45.765298"
+}

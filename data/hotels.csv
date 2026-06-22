@@ -1,0 +1,9 @@
+hotel_id,name,slug,region,country,star_rating,image_url,scraped_at
+40,Ekavi Apartments,/tours/greece/ekavi-apartments,CRETE-CHANIA,GREECE,2*,https://files.neckermann-nordic.dk/hotel/hotels/greece/ekavi-apartments/o48119?&hotelCode=40,2026-06-22T10:39:45.765298
+49,Tivoli Hotel,/tours/greece/tivoli-hotel,RHODES,GREECE,3*,,2026-06-22T10:39:45.765298
+48,Summer Dream Hotel,/tours/greece/summer-dream-hotel,RHODES,GREECE,3*,,2026-06-22T10:39:45.765298
+43,Kavros Beach Hotel,/tours/greece/kavros-beach-hotel,CRETE-CHANIA,GREECE,3*,,2026-06-22T10:39:45.765298
+44,Kavros Garden Hotel,/tours/greece/kavros-garden-hotel,CRETE-CHANIA,GREECE,3*,,2026-06-22T10:39:45.765298
+34,All Senses Nautica Blue Exclusive Resort,/tours/greece/all-senses-nautica-blue-exclusive-resort,RHODES,GREECE,5*,,2026-06-22T10:39:45.765298
+47,Resol Hotel,/tours/greece/resol-hotel,CRETE-RETHYMNO,GREECE,4*,,2026-06-22T10:39:45.765298
+42,Hydramis Palace,/tours/greece/hydramis-palace,CRETE-CHANIA,GREECE,5*,,2026-06-22T10:39:45.765298
