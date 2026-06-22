@@ -8,7 +8,7 @@ import requests
 import json
 import csv
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 import time
 
 
@@ -49,13 +49,13 @@ class NeckermannFlow1Extractor:
         # Unique hotels storage
         self.hotels = {}  # Key: hotel_inc, Value: hotel info
     
-    def build_params(self, departure_code, price_page=1):
+    def build_params(self, departure_code, checkin_date, price_page=1):
         """Build API parameters for hotel list extraction."""
         return {
             'CHARTER': 'True',
             'ADULT': '2',
-            'CHECKIN_BEG': '20260625',
-            'CHECKIN_END': '20260625',
+            'CHECKIN_BEG': checkin_date,
+            'CHECKIN_END': checkin_date,
             'CHILD': '0',
             'COSTMAX': '',
             'COSTMIN': '',
@@ -84,12 +84,32 @@ class NeckermannFlow1Extractor:
             'TOURTYPE': '-1',
         }
     
-    def fetch_page(self, departure_code, price_page=1):
-        """Fetch a page of results from API."""
-        params = self.build_params(departure_code, price_page)
+    def fetch_page(self, departure_code, checkin_date, price_page=1, proxy=None):
+        """Fetch a page of results from API.
+        
+        Args:
+            departure_code: Airport code (AAL, CPH, BLL)
+            checkin_date: Check-in date (YYYYMMDD)
+            price_page: Page number
+            proxy: Proxy URL (e.g., 'http://user:pass@proxy:port')
+        """
+        params = self.build_params(departure_code, checkin_date, price_page)
+        
+        proxies = None
+        if proxy:
+            proxies = {
+                'http': proxy,
+                'https': proxy
+            }
         
         try:
-            resp = requests.get(self.api_url, params=params, headers=self.headers, timeout=30)
+            resp = requests.get(
+                self.api_url, 
+                params=params, 
+                headers=self.headers, 
+                proxies=proxies,
+                timeout=30
+            )
             resp.raise_for_status()
             return resp.json()
         except Exception as e:
@@ -131,72 +151,101 @@ class NeckermannFlow1Extractor:
             'scraped_at': datetime.now().isoformat()
         }
     
-    def extract_all_hotels(self):
-        """Extract all unique hotels from all departures."""
-        print("Flow 1: Extracting hotel list with meal plans and departure airports")
+    def extract_all_hotels(self, days_range=90, proxy=None):
+        """Extract all unique hotels across multiple dates.
+        
+        Args:
+            days_range: Number of days to check (default 90)
+            proxy: Proxy URL (e.g., 'http://user:pass@proxy:port')
+        """
+        print("Flow 1: Extracting hotel list across multiple dates")
         print("="*60)
+        print(f"Date range: {days_range} days")
+        if proxy:
+            print(f"Proxy: {proxy}")
+        print("="*60)
+        
+        today = datetime.now()
         
         for dep_code in self.departures.keys():
             print(f"\nProcessing departure: {dep_code}")
             
-            page = 1
-            max_pages = 20
-            
-            while page <= max_pages:
-                print(f"  Fetching page {page}...")
+            # Loop through dates (every 7 days)
+            for day_offset in range(0, days_range, 7):
+                checkin_date = today + timedelta(days=day_offset)
+                checkin_str = checkin_date.strftime('%Y%m%d')
                 
-                data = self.fetch_page(dep_code, page)
+                print(f"\n  Date: {checkin_date.strftime('%Y-%m-%d')} (offset: {day_offset})")
                 
-                if not data or not isinstance(data, list) or len(data) == 0:
-                    break
+                page = 1
+                max_pages = 50  # Increased max pages
+                consecutive_empty = 0
                 
-                item = data[0]
-                
-                if 'prices' not in item or not item['prices']:
-                    break
-                
-                prices = item['prices']
-                print(f"    Found {len(prices)} hotels on page {page}")
-                
-                for price_data in prices:
-                    hotel_info = self.extract_hotel_info(price_data, dep_code)
+                while page <= max_pages and consecutive_empty < 3:
+                    print(f"    Fetching page {page}...")
                     
-                    if hotel_info:
-                        hotel_inc = hotel_info['hotel_inc']
+                    data = self.fetch_page(dep_code, checkin_str, page, proxy)
+                    
+                    if not data or not isinstance(data, list) or len(data) == 0:
+                        print(f"      No data returned, stopping")
+                        break
+                    
+                    item = data[0]
+                    
+                    if 'prices' not in item or not item['prices']:
+                        print(f"      No prices in response, stopping")
+                        consecutive_empty += 1
+                        if consecutive_empty >= 3:
+                            print(f"      3 consecutive empty pages, stopping")
+                            break
+                        page += 1
+                        continue
+                    
+                    consecutive_empty = 0
+                    prices = item['prices']
+                    print(f"      Found {len(prices)} hotels on page {page}")
+                    
+                    for price_data in prices:
+                        hotel_info = self.extract_hotel_info(price_data, dep_code)
                         
-                        # If hotel already exists, add departure and meal plan
-                        if hotel_inc in self.hotels:
-                            # Add departure if not already present
-                            if dep_code not in self.hotels[hotel_inc]['departures']:
-                                self.hotels[hotel_inc]['departures'].append(dep_code)
+                        if hotel_info:
+                            hotel_inc = hotel_info['hotel_inc']
                             
-                            # Add meal plan if not already present
-                            meal_plan = hotel_info['meal_plan']
-                            if meal_plan and meal_plan not in self.hotels[hotel_inc]['meal_plans']:
-                                self.hotels[hotel_inc]['meal_plans'].append(meal_plan)
-                        else:
-                            # New hotel
-                            self.hotels[hotel_inc] = {
-                                'hotel_inc': hotel_inc,
-                                'name': hotel_info['name'],
-                                'name_local': hotel_info['name_local'],
-                                'star_rating': hotel_info['star_rating'],
-                                'star_inc': hotel_info['star_inc'],
-                                'town_inc': hotel_info['town_inc'],
-                                'departures': [dep_code],
-                                'meal_plans': [hotel_info['meal_plan']] if hotel_info['meal_plan'] else [],
-                                'room_types': [hotel_info['room_type']] if hotel_info['room_type'] else [],
-                                'url': hotel_info['url'],
-                                'scraped_at': hotel_info['scraped_at']
-                            }
+                            # If hotel already exists, add departure and meal plan
+                            if hotel_inc in self.hotels:
+                                # Add departure if not already present
+                                if dep_code not in self.hotels[hotel_inc]['departures']:
+                                    self.hotels[hotel_inc]['departures'].append(dep_code)
+                                
+                                # Add meal plan if not already present
+                                meal_plan = hotel_info['meal_plan']
+                                if meal_plan and meal_plan not in self.hotels[hotel_inc]['meal_plans']:
+                                    self.hotels[hotel_inc]['meal_plans'].append(meal_plan)
+                                
+                                # Add room type if not already present
+                                room_type = hotel_info['room_type']
+                                if room_type and room_type not in self.hotels[hotel_inc]['room_types']:
+                                    self.hotels[hotel_inc]['room_types'].append(room_type)
+                            else:
+                                # New hotel
+                                self.hotels[hotel_inc] = {
+                                    'hotel_inc': hotel_inc,
+                                    'name': hotel_info['name'],
+                                    'name_local': hotel_info['name_local'],
+                                    'star_rating': hotel_info['star_rating'],
+                                    'star_inc': hotel_info['star_inc'],
+                                    'town_inc': hotel_info['town_inc'],
+                                    'departures': [dep_code],
+                                    'meal_plans': [hotel_info['meal_plan']] if hotel_info['meal_plan'] else [],
+                                    'room_types': [hotel_info['room_type']] if hotel_info['room_type'] else [],
+                                    'url': hotel_info['url'],
+                                    'scraped_at': hotel_info['scraped_at']
+                                }
+                    
+                    page += 1
+                    time.sleep(0.5)  # Rate limiting
                 
-                # Check total pages
-                total_pages = item.get('pages', 1)
-                if page >= total_pages:
-                    break
-                
-                page += 1
-                time.sleep(0.5)  # Rate limiting
+                time.sleep(1)  # Rate limiting between dates
             
             print(f"  Total unique hotels so far: {len(self.hotels)}")
         
@@ -321,8 +370,15 @@ def main():
     print("No prices - just hotel catalog information")
     print("="*60)
     
-    # Extract all hotels
-    extractor.extract_all_hotels()
+    # Get proxy from environment variable or use None
+    proxy = os.environ.get('PROXY_URL', None)
+    if proxy:
+        print(f"Using proxy: {proxy}")
+    else:
+        print("No proxy configured (set PROXY_URL environment variable)")
+    
+    # Extract all hotels (90 days range)
+    extractor.extract_all_hotels(days_range=90, proxy=proxy)
     
     # Save data
     extractor.save_to_json()

@@ -8,7 +8,7 @@
       "star_inc": 3,
       "town_inc": "1446",
       "departures": [
-        "AAL",
+        "CPH",
         "BLL"
       ],
       "meal_plans": [
@@ -18,27 +18,67 @@
         "STANDARD ROOM"
       ],
       "url": "https://neckermann-nordic.dk/tours/turkey/mitos-apart-hotel",
-      "scraped_at": "2026-06-22T12:44:54.516105"
+      "scraped_at": "2026-06-22T14:07:10.431794"
     },
     {
-      "hotel_inc": 443,
-      "name": "Lavinia Apart Hotel",
-      "name_local": "Lavinia Apart Hotel",
+      "hotel_inc": 173,
+      "name": "Alanya Ada Apart Hotel",
+      "name_local": "Alanya Ada Apart Hotel",
       "star_rating": "***",
       "star_inc": 3,
       "town_inc": "1446",
       "departures": [
-        "AAL",
+        "CPH",
         "BLL"
       ],
       "meal_plans": [
         "RO"
       ],
       "room_types": [
-        "Apart Room 1+1"
+        "Studio Room"
       ],
-      "url": "https://neckermann-nordic.dk/tours/turkey/lavinia-apart-hotel",
-      "scraped_at": "2026-06-22T12:44:54.516128"
+      "url": "https://neckermann-nordic.dk/tours/turkey/alanya-ada-apart-hotel",
+      "scraped_at": "2026-06-22T14:07:10.431819"
+    },
+    {
+      "hotel_inc": 80,
+      "name": "Kleopatra Bavyera Hotel",
+      "name_local": "Kleopatra Bavyera Hotel",
+      "star_rating": "***",
+      "star_inc": 3,
+      "town_inc": "1446",
+      "departures": [
+        "CPH",
+        "BLL"
+      ],
+      "meal_plans": [
+        "BB"
+      ],
+      "room_types": [
+        "Economy Room"
+      ],
+      "url": "https://neckermann-nordic.dk/tours/turkey/kleopatra-bavyera-hotel",
+      "scraped_at": "2026-06-22T14:07:10.431828"
+    },
+    {
+      "hotel_inc": 81,
+      "name": "Kleopatra Bebek Hotel",
+      "name_local": "Kleopatra Bebek Hotel",
+      "star_rating": "***",
+      "star_inc": 3,
+      "town_inc": "1446",
+      "departures": [
+        "CPH",
+        "BLL"
+      ],
+      "meal_plans": [
+        "BB"
+      ],
+      "room_types": [
+        "Economy Room"
+      ],
+      "url": "https://neckermann-nordic.dk/tours/turkey/kleopatra-bebek-hotel",
+      "scraped_at": "2026-06-22T14:07:10.431835"
     },
     {
       "hotel_inc": 256,
@@ -48,7 +88,7 @@
       "star_inc": 3,
       "town_inc": "1446",
       "departures": [
-        "AAL",
+        "CPH",
         "BLL"
       ],
       "meal_plans": [
@@ -58,27 +98,7 @@
         "Apart Room 1+1"
       ],
       "url": "https://neckermann-nordic.dk/tours/turkey/sunway-apart-hotel",
-      "scraped_at": "2026-06-22T12:44:54.516136"
-    },
-    {
-      "hotel_inc": 419,
-      "name": "Kleopatra Hotel",
-      "name_local": "Kleopatra Hotel",
-      "star_rating": "***",
-      "star_inc": 3,
-      "town_inc": "1446",
-      "departures": [
-        "AAL",
-        "BLL"
-      ],
-      "meal_plans": [
-        "BB"
-      ],
-      "room_types": [
-        "STANDARD ROOM"
-      ],
-      "url": "https://neckermann-nordic.dk/tours/turkey/kleopatra-hotel",
-      "scraped_at": "2026-06-22T12:44:54.516143"
+      "scraped_at": "2026-06-22T14:07:10.431840"
     },
     {
       "hotel_inc": 72,
@@ -88,7 +108,7 @@
       "star_inc": 3,
       "town_inc": "1446",
       "departures": [
-        "AAL",
+        "CPH",
         "BLL"
       ],
       "meal_plans": [
@@ -98,27 +118,7 @@
         "Studio Room"
       ],
       "url": "https://neckermann-nordic.dk/tours/turkey/may-flower-apart",
-      "scraped_at": "2026-06-22T12:44:54.516148"
-    },
-    {
-      "hotel_inc": 89,
-      "name": "Blue Heaven Beach Apart",
-      "name_local": "Blue Heaven Beach Apart",
-      "star_rating": "***",
-      "star_inc": 3,
-      "town_inc": "1944",
-      "departures": [
-        "AAL",
-        "BLL"
-      ],
-      "meal_plans": [
-        "RO"
-      ],
-      "room_types": [
-        "Family Suite"
-      ],
-      "url": "https://neckermann-nordic.dk/tours/turkey/blue-heaven-beach-apart",
-      "scraped_at": "2026-06-22T12:44:54.516154"
+      "scraped_at": "2026-06-22T14:07:10.431846"
     },
     {
       "hotel_inc": 1580,
@@ -128,7 +128,7 @@
       "star_inc": 3,
       "town_inc": "1239",
       "departures": [
-        "AAL",
+        "CPH",
         "BLL"
       ],
       "meal_plans": [
@@ -138,64 +138,67 @@
         "Standard Twin Room"
       ],
       "url": "https://neckermann-nordic.dk/tours/turkey/lemas-suite-hotelex-lemas-suite-hotel-by-kulabey",
-      "scraped_at": "2026-06-22T12:44:54.516163"
+      "scraped_at": "2026-06-22T14:07:10.431855"
     },
     {
-      "hotel_inc": 346,
-      "name": "Selenium Hotel",
-      "name_local": "Selenium Hotel",
-      "star_rating": "****",
-      "star_inc": 4,
-      "town_inc": "1239",
+      "hotel_inc": 419,
+      "name": "Kleopatra Hotel",
+      "name_local": "Kleopatra Hotel",
+      "star_rating": "***",
+      "star_inc": 3,
+      "town_inc": "1446",
       "departures": [
-        "AAL"
+        "CPH",
+        "BLL"
       ],
       "meal_plans": [
-        "HB"
+        "BB"
       ],
       "room_types": [
-        "Economy Room"
+        "STANDARD ROOM"
       ],
-      "url": "https://neckermann-nordic.dk/tours/turkey/selenium-hotel",
-      "scraped_at": "2026-06-22T12:44:54.516169"
+      "url": "https://neckermann-nordic.dk/tours/turkey/kleopatra-hotel",
+      "scraped_at": "2026-06-22T14:07:10.431861"
     },
     {
-      "hotel_inc": 1095,
-      "name": "Sun City Apartments & Hotel",
-      "name_local": "Sun City Apartments & Hotel",
-      "star_rating": "****",
-      "star_inc": 4,
-      "town_inc": "1239",
+      "hotel_inc": 443,
+      "name": "Lavinia Apart Hotel",
+      "name_local": "Lavinia Apart Hotel",
+      "star_rating": "***",
+      "star_inc": 3,
+      "town_inc": "1446",
       "departures": [
-        "AAL"
+        "CPH",
+        "BLL"
       ],
       "meal_plans": [
         "RO"
       ],
       "room_types": [
-        "1 Bedroom"
+        "Apart Room 1+1"
       ],
-      "url": "https://neckermann-nordic.dk/tours/turkey/sun-city-apartments--hotel",
-      "scraped_at": "2026-06-22T12:44:54.516176"
+      "url": "https://neckermann-nordic.dk/tours/turkey/lavinia-apart-hotel",
+      "scraped_at": "2026-06-22T14:07:10.431867"
     },
     {
-      "hotel_inc": 313,
-      "name": "Hawaii Suit Beach",
-      "name_local": "Hawaii Suit Beach",
-      "star_rating": "3***+",
-      "star_inc": 7,
-      "town_inc": "1446",
+      "hotel_inc": 89,
+      "name": "Blue Heaven Beach Apart",
+      "name_local": "Blue Heaven Beach Apart",
+      "star_rating": "***",
+      "star_inc": 3,
+      "town_inc": "1944",
       "departures": [
-        "AAL"
+        "CPH",
+        "BLL"
       ],
       "meal_plans": [
-        "AI"
+        "RO"
       ],
       "room_types": [
-        "Economy Room Without Balcony"
+        "Family Suite"
       ],
-      "url": "https://neckermann-nordic.dk/tours/turkey/hawaii-suit-beach",
-      "scraped_at": "2026-06-22T12:44:54.516181"
+      "url": "https://neckermann-nordic.dk/tours/turkey/blue-heaven-beach-apart",
+      "scraped_at": "2026-06-22T14:07:10.431873"
     },
     {
       "hotel_inc": 1588,
@@ -205,6 +208,7 @@
       "star_inc": 3,
       "town_inc": "1446",
       "departures": [
+        "CPH",
         "BLL"
       ],
       "meal_plans": [
@@ -214,49 +218,31 @@
         "Apart Room"
       ],
       "url": "https://neckermann-nordic.dk/tours/turkey/angora-apart-hotel",
-      "scraped_at": "2026-06-22T12:44:56.332913"
+      "scraped_at": "2026-06-22T14:07:12.520597"
     },
     {
-      "hotel_inc": 202,
-      "name": "Arsi Hotel",
-      "name_local": "Arsi Hotel",
-      "star_rating": "****",
-      "star_inc": 4,
-      "town_inc": "1446",
-      "departures": [
-        "BLL"
-      ],
-      "meal_plans": [
-        "AI"
-      ],
-      "room_types": [
-        "Economy Room Without Balcony"
-      ],
-      "url": "https://neckermann-nordic.dk/tours/turkey/arsi-hotel",
-      "scraped_at": "2026-06-22T12:44:56.332926"
-    },
-    {
-      "hotel_inc": 1053,
-      "name": "Aslan Corner Hotel",
-      "name_local": "Aslan Corner Hotel",
+      "hotel_inc": 308,
+      "name": "Green Park Hotel",
+      "name_local": "Green Park Hotel",
       "star_rating": "***",
       "star_inc": 3,
       "town_inc": "1446",
       "departures": [
+        "CPH",
         "BLL"
       ],
       "meal_plans": [
         "RO"
       ],
       "room_types": [
-        "STANDARD ROOM"
+        "Apart Room 1"
       ],
-      "url": "https://neckermann-nordic.dk/tours/turkey/aslan-corner-hotel",
-      "scraped_at": "2026-06-22T12:44:56.332932"
+      "url": "https://neckermann-nordic.dk/tours/turkey/green-park-hotel",
+      "scraped_at": "2026-06-22T14:07:27.540473"
     }
   ],
-  "total": 13,
-  "scraped_at": "2026-06-22T12:44:56.333102",
+  "total": 12,
+  "scraped_at": "2026-06-22T14:07:59.328552",
   "parameters": {
     "departures": [
       "AAL",
