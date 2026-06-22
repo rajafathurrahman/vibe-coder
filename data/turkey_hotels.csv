@@ -1,0 +1,11 @@
+name,slug,location,price,original_price,board_type,room_type,temperature,few_spots_left,url
+Mitos Apart Hotel,mitos-apart-hotel,Alanya,6.251,7.958,RO,Standard Room,29,False,https://neckermann-nordic.dk/tours/turkey/mitos-apart-hotel
+Lavinia Apart Hotel,lavinia-apart-hotel,Alanya,6.714,8.422,RO,Apart Room 1+1,29,False,https://neckermann-nordic.dk/tours/turkey/lavinia-apart-hotel
+Sunway Apart Hotel,sunway-apart-hotel,Alanya,6.728,8.435,RO,Apart Room 1+1,29,False,https://neckermann-nordic.dk/tours/turkey/sunway-apart-hotel
+Kleopatra Hotel,kleopatra-hotel,Alanya,6.885,8.593,BB,Standard Room,29,True,https://neckermann-nordic.dk/tours/turkey/kleopatra-hotel
+May Flower Apart,may-flower-apart,Alanya,6.945,8.652,RO,Studio Room,28.9,True,https://neckermann-nordic.dk/tours/turkey/may-flower-apart
+Lemas Suite Hotel,lemas-suite-hotel,Side,7.017,8.724,RO,Standard Twin Room,29.7,False,https://neckermann-nordic.dk/tours/turkey/lemas-suite-hotel
+Angora Apart Hotel,angora-apart-hotel,Alanya,7.352,9.059,RO,Apart Room,29,False,https://neckermann-nordic.dk/tours/turkey/angora-apart-hotel
+Blue Heaven Beach Apart,blue-heaven-beach-apart,Kumkoy / Side,7.352,9.059,RO,Family Suite,29.9,False,https://neckermann-nordic.dk/tours/turkey/blue-heaven-beach-apart
+Arsi Hotel,arsi-hotel,Alanya,7.488,9.196,AI,Economy Room Without Balcony,29,False,https://neckermann-nordic.dk/tours/turkey/arsi-hotel
+Selenium Hotel,selenium-hotel,Side,7.531,9.239,HB,Economy Room,29.3,True,https://neckermann-nordic.dk/tours/turkey/selenium-hotel

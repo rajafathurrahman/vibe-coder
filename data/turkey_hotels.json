@@ -1,0 +1,127 @@
+{
+  "hotels": [
+    {
+      "name": "Mitos Apart Hotel",
+      "slug": "mitos-apart-hotel",
+      "location": "Alanya",
+      "price": "6.251",
+      "original_price": "7.958",
+      "board_type": "RO",
+      "room_type": "Standard Room",
+      "temperature": "29",
+      "few_spots_left": false,
+      "url": "https://neckermann-nordic.dk/tours/turkey/mitos-apart-hotel"
+    },
+    {
+      "name": "Lavinia Apart Hotel",
+      "slug": "lavinia-apart-hotel",
+      "location": "Alanya",
+      "price": "6.714",
+      "original_price": "8.422",
+      "board_type": "RO",
+      "room_type": "Apart Room 1+1",
+      "temperature": "29",
+      "few_spots_left": false,
+      "url": "https://neckermann-nordic.dk/tours/turkey/lavinia-apart-hotel"
+    },
+    {
+      "name": "Sunway Apart Hotel",
+      "slug": "sunway-apart-hotel",
+      "location": "Alanya",
+      "price": "6.728",
+      "original_price": "8.435",
+      "board_type": "RO",
+      "room_type": "Apart Room 1+1",
+      "temperature": "29",
+      "few_spots_left": false,
+      "url": "https://neckermann-nordic.dk/tours/turkey/sunway-apart-hotel"
+    },
+    {
+      "name": "Kleopatra Hotel",
+      "slug": "kleopatra-hotel",
+      "location": "Alanya",
+      "price": "6.885",
+      "original_price": "8.593",
+      "board_type": "BB",
+      "room_type": "Standard Room",
+      "temperature": "29",
+      "few_spots_left": true,
+      "url": "https://neckermann-nordic.dk/tours/turkey/kleopatra-hotel"
+    },
+    {
+      "name": "May Flower Apart",
+      "slug": "may-flower-apart",
+      "location": "Alanya",
+      "price": "6.945",
+      "original_price": "8.652",
+      "board_type": "RO",
+      "room_type": "Studio Room",
+      "temperature": "28.9",
+      "few_spots_left": true,
+      "url": "https://neckermann-nordic.dk/tours/turkey/may-flower-apart"
+    },
+    {
+      "name": "Lemas Suite Hotel",
+      "slug": "lemas-suite-hotel",
+      "location": "Side",
+      "price": "7.017",
+      "original_price": "8.724",
+      "board_type": "RO",
+      "room_type": "Standard Twin Room",
+      "temperature": "29.7",
+      "few_spots_left": false,
+      "url": "https://neckermann-nordic.dk/tours/turkey/lemas-suite-hotel"
+    },
+    {
+      "name": "Angora Apart Hotel",
+      "slug": "angora-apart-hotel",
+      "location": "Alanya",
+      "price": "7.352",
+      "original_price": "9.059",
+      "board_type": "RO",
+      "room_type": "Apart Room",
+      "temperature": "29",
+      "few_spots_left": false,
+      "url": "https://neckermann-nordic.dk/tours/turkey/angora-apart-hotel"
+    },
+    {
+      "name": "Blue Heaven Beach Apart",
+      "slug": "blue-heaven-beach-apart",
+      "location": "Kumkoy / Side",
+      "price": "7.352",
+      "original_price": "9.059",
+      "board_type": "RO",
+      "room_type": "Family Suite",
+      "temperature": "29.9",
+      "few_spots_left": false,
+      "url": "https://neckermann-nordic.dk/tours/turkey/blue-heaven-beach-apart"
+    },
+    {
+      "name": "Arsi Hotel",
+      "slug": "arsi-hotel",
+      "location": "Alanya",
+      "price": "7.488",
+      "original_price": "9.196",
+      "board_type": "AI",
+      "room_type": "Economy Room Without Balcony",
+      "temperature": "29",
+      "few_spots_left": false,
+      "url": "https://neckermann-nordic.dk/tours/turkey/arsi-hotel"
+    },
+    {
+      "name": "Selenium Hotel",
+      "slug": "selenium-hotel",
+      "location": "Side",
+      "price": "7.531",
+      "original_price": "9.239",
+      "board_type": "HB",
+      "room_type": "Economy Room",
+      "temperature": "29.3",
+      "few_spots_left": true,
+      "url": "https://neckermann-nordic.dk/tours/turkey/selenium-hotel"
+    }
+  ],
+  "scraped_at": "2026-06-22T11:05:59.959168",
+  "total": 10,
+  "source": "Browser extraction from neckermann-nordic.dk"
+}
