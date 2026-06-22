@@ -1,0 +1,14 @@
+hotel_inc,name,name_local,star_rating,star_inc,town_inc,departures,meal_plans,room_types,url,scraped_at
+1096,Mitos Apart Hotel,Mitos Apart Hotel,***,3,1446,"AAL, BLL",RO,STANDARD ROOM,https://neckermann-nordic.dk/tours/turkey/mitos-apart-hotel,2026-06-22T12:44:54.516105
+443,Lavinia Apart Hotel,Lavinia Apart Hotel,***,3,1446,"AAL, BLL",RO,Apart Room 1+1,https://neckermann-nordic.dk/tours/turkey/lavinia-apart-hotel,2026-06-22T12:44:54.516128
+256,Sunway Apart Hotel,Sunway Apart Hotel,***,3,1446,"AAL, BLL",RO,Apart Room 1+1,https://neckermann-nordic.dk/tours/turkey/sunway-apart-hotel,2026-06-22T12:44:54.516136
+419,Kleopatra Hotel,Kleopatra Hotel,***,3,1446,"AAL, BLL",BB,STANDARD ROOM,https://neckermann-nordic.dk/tours/turkey/kleopatra-hotel,2026-06-22T12:44:54.516143
+72,May Flower Apart,May Flower Apart,***,3,1446,"AAL, BLL",RO,Studio Room,https://neckermann-nordic.dk/tours/turkey/may-flower-apart,2026-06-22T12:44:54.516148
+89,Blue Heaven Beach Apart,Blue Heaven Beach Apart,***,3,1944,"AAL, BLL",RO,Family Suite,https://neckermann-nordic.dk/tours/turkey/blue-heaven-beach-apart,2026-06-22T12:44:54.516154
+1580,Lemas Suite Hotel(Ex. Lemas Suite Hotel By Kulabey),Lemas Suite Hotel(Ex. Lemas Suite Hotel By Kulabey),***,3,1239,"AAL, BLL",RO,Standard Twin Room,https://neckermann-nordic.dk/tours/turkey/lemas-suite-hotelex-lemas-suite-hotel-by-kulabey,2026-06-22T12:44:54.516163
+346,Selenium Hotel,Selenium Hotel,****,4,1239,AAL,HB,Economy Room,https://neckermann-nordic.dk/tours/turkey/selenium-hotel,2026-06-22T12:44:54.516169
+1095,Sun City Apartments & Hotel,Sun City Apartments & Hotel,****,4,1239,AAL,RO,1 Bedroom,https://neckermann-nordic.dk/tours/turkey/sun-city-apartments--hotel,2026-06-22T12:44:54.516176
+313,Hawaii Suit Beach,Hawaii Suit Beach,3***+,7,1446,AAL,AI,Economy Room Without Balcony,https://neckermann-nordic.dk/tours/turkey/hawaii-suit-beach,2026-06-22T12:44:54.516181
+1588,Angora Apart Hotel,Angora Apart Hotel,***,3,1446,BLL,RO,Apart Room,https://neckermann-nordic.dk/tours/turkey/angora-apart-hotel,2026-06-22T12:44:56.332913
+202,Arsi Hotel,Arsi Hotel,****,4,1446,BLL,AI,Economy Room Without Balcony,https://neckermann-nordic.dk/tours/turkey/arsi-hotel,2026-06-22T12:44:56.332926
+1053,Aslan Corner Hotel,Aslan Corner Hotel,***,3,1446,BLL,RO,STANDARD ROOM,https://neckermann-nordic.dk/tours/turkey/aslan-corner-hotel,2026-06-22T12:44:56.332932
