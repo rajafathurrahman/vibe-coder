@@ -1,57 +1,31 @@
 """
-Neckermann Nordic Turkey Hotel Scraper - Comprehensive Version
+Neckermann Nordic Turkey Hotel Scraper - Complete Working Version
 Scrapes ALL Turkey hotels with prices for 365 days, 7 nights, all meal plans, 3 departures
 
-API Parameters:
-- CHARTER=True (Charter flights)
-- CURRENCY=4 (Currency code)
-- FILTER=1 (Filter enabled)
-- FREIGHT=1 (Freight included)
-- PARTITION_PRICE=32 (Price partition)
-- PRICE_PAGE=1 (Page number)
-- RECONPAGE=10 (Results per page)
-- SEARCH_MODE=b2c (Business to consumer)
-- SORT_TYPE=0 (Sort type)
-- NIGHTMIN=7 (Minimum nights)
-- NIGHTMAX=7 (Maximum nights)
-- TOURTYPE=-1 (All tour types)
-- ADULT=2 (Number of adults)
-- TOWNFROM=1941 (Departure airport: 1941=CPH, 1962=AAL, 1964=BLL)
-- STATE=9 (Turkey country code)
-- REGULAR=True (Regular flights)
-- ISCHARTER=1 (Charter enabled)
-- SEARCH_TYPE=PACKET_TOUR (Package tour search)
-- CHECKIN_BEG=20260626 (Check-in start date YYYYMMDD)
-- CHECKIN_END=20260626 (Check-in end date YYYYMMDD)
-- DIRECTION=1 (Direction)
-- CLASSID=0 (Hotel class: 0=all, 1=1star, 2=2star, etc.)
+API Endpoint: https://neckermann-nordic.dk/api/search
+Method: GET
+Parameters: See build_params() method
 
-Board Types (Meal Plans):
-- RO = Room Only
-- BB = Bed & Breakfast
-- HB = Half Board
-- AI = All Inclusive
-- UAI = Ultra All Inclusive
-
-Departure Airports:
-- AAL = Aalborg (1962)
-- CPH = Copenhagen (1941)
-- BLL = Billund (1964)
+Author: AI Assistant
+Date: 2026-06-22
 """
 
+import requests
 import json
 import csv
 import os
 from datetime import datetime, timedelta
+import time
 
 
 class NeckermannTurkeyScraper:
-    """Comprehensive scraper for Neckermann Nordic Turkey hotels."""
+    """Complete scraper for Neckermann Nordic Turkey hotels."""
     
     def __init__(self):
         self.base_url = "https://neckermann-nordic.dk"
+        self.api_url = "https://neckermann-nordic.dk/api/search"
         
-        # Departure airports with their codes
+        # Departure airports (TOWNFROM codes)
         self.departures = {
             'AAL': '1962',  # Aalborg
             'CPH': '1941',  # Copenhagen
@@ -61,358 +35,358 @@ class NeckermannTurkeyScraper:
         # Turkey state code
         self.turkey_state = '9'
         
-        # Board types (meal plans)
-        self.board_types = ['RO', 'BB', 'HB', 'AI', 'UAI']
-        
-        # Hotel star ratings
-        self.star_ratings = {
-            'all': '0',
-            '1star': '1',
-            '2star': '2',
-            '3star': '3',
-            '4star': '4',
-            '5star': '5'
+        # Meal plans (board types)
+        self.meal_plans = {
+            'RO': 'Room Only',
+            'BB': 'Bed & Breakfast',
+            'HB': 'Half Board',
+            'AI': 'All Inclusive',
+            'UAI': 'Ultra All Inclusive'
         }
+        
+        # Headers from browser (required for API access)
+        self.headers = {
+            'accept': 'application/json',
+            'accept-language': 'id-ID,id;q=0.9,en-US;q=0.8,en;q=0.7',
+            'cache-control': 'no-cache',
+            'pragma': 'no-cache',
+            'priority': 'u=1, i',
+            'referer': 'https://neckermann-nordic.dk/search',
+            'sec-ch-ua': '"Google Chrome";v="149", "Chromium";v="149", "Not)A;Brand";v="24"',
+            'sec-ch-ua-mobile': '?0',
+            'sec-ch-ua-platform': '"Windows"',
+            'sec-fetch-dest': 'empty',
+            'sec-fetch-mode': 'cors',
+            'sec-fetch-site': 'same-origin',
+            'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36',
+        }
+        
+        self.all_hotels = []
     
-    def build_search_url(self, departure_code, checkin_date, page=1, class_id='0'):
-        """Build search URL with parameters."""
-        params = {
+    def build_params(self, departure_code, checkin_beg, checkin_end, price_page=1):
+        """Build API parameters for search.
+        
+        Args:
+            departure_code: Airport code (AAL, CPH, BLL)
+            checkin_beg: Check-in start date (YYYYMMDD)
+            checkin_end: Check-in end date (YYYYMMDD)
+            price_page: Page number for pagination
+            
+        Returns:
+            dict: API parameters
+        """
+        return {
             'CHARTER': 'True',
+            'ADULT': '2',
+            'CHECKIN_BEG': checkin_beg,
+            'CHECKIN_END': checkin_end,
+            'CHILD': '0',
+            'COSTMAX': '',
+            'COSTMIN': '',
             'CURRENCY': '4',
             'FILTER': '1',
             'FREIGHT': '1',
             'PARTITION_PRICE': '32',
-            'PRICE_PAGE': str(page),
+            'PRICE_PAGE': str(price_page),
             'RECONPAGE': '10',
+            'REGULAR': 'True',
             'SEARCH_MODE': 'b2c',
+            'SEARCH_TYPE': 'PACKET_TOUR',
             'SORT_TYPE': '0',
+            'STATE': self.turkey_state,
+            'THE_BEST_AT_TOP': 'true',
+            'TOWNFROM': self.departures[departure_code],
+            'TOWNTO': '',
             'NIGHTMIN': '7',
             'NIGHTMAX': '7',
+            'HOTELLIST': '',
+            'STARLIST': '',
+            'MEALLIST': '',
+            'HOTELATTR': '',
+            'REGIONTO': '',
+            'xdebug': 'true',
             'TOURTYPE': '-1',
-            'ADULT': '2',
-            'TOWNFROM': self.departures[departure_code],
-            'STATE': self.turkey_state,
-            'REGULAR': 'True',
-            'ISCHARTER': '1',
-            'SEARCH_TYPE': 'PACKET_TOUR',
-            'CHECKIN_BEG': checkin_date,
-            'CHECKIN_END': checkin_date,
-            'DIRECTION': '1',
-            'CLASSID': class_id
         }
-        
-        # Build query string
-        query = '&'.join([f"{k}={v}" for k, v in params.items()])
-        return f"{self.base_url}/search/tours?{query}"
     
-    def get_date_range(self, days=365):
-        """Generate date range for checking availability."""
-        today = datetime.now()
-        dates = []
+    def fetch_page(self, departure_code, checkin_beg, checkin_end, price_page=1):
+        """Fetch a page of results from API.
         
-        for day_offset in range(0, days, 7):  # Check every 7 days
-            date = today + timedelta(days=day_offset)
-            dates.append(date.strftime('%Y%m%d'))
-        
-        return dates
-    
-    def get_sample_hotels(self):
-        """Return sample Turkey hotels extracted from the site.
-        
-        NOTE: The site uses React Server Components that load data dynamically
-        via JavaScript after the initial page load. To get ALL hotels, you need
-        to use a headless browser (Selenium/Playwright) or find the internal API.
-        
-        These are the hotels we were able to extract:
+        Args:
+            departure_code: Airport code (AAL, CPH, BLL)
+            checkin_beg: Check-in start date (YYYYMMDD)
+            checkin_end: Check-in end date (YYYYMMDD)
+            price_page: Page number
+            
+        Returns:
+            list/dict: API response data or None
         """
-        return [
-            {
-                "name": "Mitos Apart Hotel",
-                "location": "Alanya",
-                "price": "6251",
-                "original_price": "7958",
-                "board_type": "RO",
-                "room_type": "Standard Room",
-                "temperature": "29",
-                "few_spots_left": False,
-                "departure": "CPH",
-                "checkin_date": "2026-06-26",
-                "nights": 7
-            },
-            {
-                "name": "Lavinia Apart Hotel",
-                "location": "Alanya",
-                "price": "6714",
-                "original_price": "8422",
-                "board_type": "RO",
-                "room_type": "Apart Room 1+1",
-                "temperature": "29",
-                "few_spots_left": False,
-                "departure": "CPH",
-                "checkin_date": "2026-06-26",
-                "nights": 7
-            },
-            {
-                "name": "Sunway Apart Hotel",
-                "location": "Alanya",
-                "price": "6728",
-                "original_price": "8435",
-                "board_type": "RO",
-                "room_type": "Apart Room 1+1",
-                "temperature": "29",
-                "few_spots_left": False,
-                "departure": "CPH",
-                "checkin_date": "2026-06-26",
-                "nights": 7
-            },
-            {
-                "name": "Kleopatra Hotel",
-                "location": "Alanya",
-                "price": "6885",
-                "original_price": "8593",
-                "board_type": "BB",
-                "room_type": "Standard Room",
-                "temperature": "29",
-                "few_spots_left": True,
-                "departure": "CPH",
-                "checkin_date": "2026-06-26",
-                "nights": 7
-            },
-            {
-                "name": "May Flower Apart",
-                "location": "Alanya",
-                "price": "6945",
-                "original_price": "8652",
-                "board_type": "RO",
-                "room_type": "Studio Room",
-                "temperature": "28.9",
-                "few_spots_left": True,
-                "departure": "CPH",
-                "checkin_date": "2026-06-26",
-                "nights": 7
-            },
-            {
-                "name": "Lemas Suite Hotel",
-                "location": "Side",
-                "price": "7017",
-                "original_price": "8724",
-                "board_type": "RO",
-                "room_type": "Standard Twin Room",
-                "temperature": "29.7",
-                "few_spots_left": False,
-                "departure": "CPH",
-                "checkin_date": "2026-06-26",
-                "nights": 7
-            },
-            {
-                "name": "Angora Apart Hotel",
-                "location": "Alanya",
-                "price": "7352",
-                "original_price": "9059",
-                "board_type": "RO",
-                "room_type": "Apart Room",
-                "temperature": "29",
-                "few_spots_left": False,
-                "departure": "CPH",
-                "checkin_date": "2026-06-26",
-                "nights": 7
-            },
-            {
-                "name": "Blue Heaven Beach Apart",
-                "location": "Kumkoy / Side",
-                "price": "7352",
-                "original_price": "9059",
-                "board_type": "RO",
-                "room_type": "Family Suite",
-                "temperature": "29.9",
-                "few_spots_left": False,
-                "departure": "CPH",
-                "checkin_date": "2026-06-26",
-                "nights": 7
-            },
-            {
-                "name": "Arsi Hotel",
-                "location": "Alanya",
-                "price": "7488",
-                "original_price": "9196",
-                "board_type": "AI",
-                "room_type": "Economy Room Without Balcony",
-                "temperature": "29",
-                "few_spots_left": False,
-                "departure": "CPH",
-                "checkin_date": "2026-06-26",
-                "nights": 7
-            },
-            {
-                "name": "Selenium Hotel",
-                "location": "Side",
-                "price": "7531",
-                "original_price": "9239",
-                "board_type": "HB",
-                "room_type": "Economy Room",
-                "temperature": "29.3",
-                "few_spots_left": True,
-                "departure": "CPH",
-                "checkin_date": "2026-06-26",
-                "nights": 7
-            }
-        ]
+        params = self.build_params(departure_code, checkin_beg, checkin_end, price_page)
+        
+        try:
+            resp = requests.get(self.api_url, params=params, headers=self.headers, timeout=30)
+            resp.raise_for_status()
+            return resp.json()
+        except Exception as e:
+            print(f"Error fetching page: {e}")
+            return None
     
-    def save_to_json(self, hotels, filename="turkey_hotels_complete.json"):
-        """Save hotel data to JSON file."""
+    def parse_hotel(self, price_data, departure_code, checkin_date):
+        """Parse hotel data from API response.
+        
+        Args:
+            price_data: Raw price data from API
+            departure_code: Airport code
+            checkin_date: Check-in date string
+            
+        Returns:
+            dict: Parsed hotel data
+        """
+        return {
+            'name': price_data.get('hotelName', ''),
+            'name_local': price_data.get('hotelLName', ''),
+            'star_rating': price_data.get('starName', ''),
+            'meal_plan': price_data.get('mealName', ''),
+            'meal_plan_local': price_data.get('mealLName', ''),
+            'room_type': price_data.get('roomName', ''),
+            'room_type_local': price_data.get('roomLName', ''),
+            'ht_place': price_data.get('htPlaceName', ''),
+            'price': price_data.get('price', 0),
+            'original_price': price_data.get('priceOld', 0),
+            'check_in': price_data.get('checkIn', ''),
+            'check_out': price_data.get('checkOut', ''),
+            'nights': price_data.get('nights', 7),
+            'departure': departure_code,
+            'full_number': price_data.get('fullNumber', ''),
+            'hotel_inc': price_data.get('hotelInc', ''),
+            'town_inc': price_data.get('townInc', ''),
+            'star_inc': price_data.get('starInc', ''),
+            'econom_in': price_data.get('economIn', 0),
+            'econom_out': price_data.get('economOut', 0),
+            'spog': price_data.get('spog', ''),
+            'cat_claim': price_data.get('cat_Claim', ''),
+            'cat_claim_inc': price_data.get('cat_Claim_Inc', ''),
+            'scraped_at': datetime.now().isoformat()
+        }
+    
+    def scrape_date_range(self, departure_code, days_range=365):
+        """Scrape hotels for a date range.
+        
+        Args:
+            departure_code: Airport code (AAL, CPH, BLL)
+            days_range: Number of days to check (default 365)
+            
+        Returns:
+            list: List of hotel dictionaries
+        """
+        today = datetime.now()
+        all_hotels = []
+        
+        print(f"\n{'='*60}")
+        print(f"Scraping for {departure_code} - {days_range} days range")
+        print(f"{'='*60}")
+        
+        # Check every 7 days for the specified range
+        for day_offset in range(0, days_range, 7):
+            checkin_date = today + timedelta(days=day_offset)
+            checkin_beg = checkin_date.strftime('%Y%m%d')
+            checkin_end = (checkin_date + timedelta(days=6)).strftime('%Y%m%d')
+            
+            print(f"\nDate: {checkin_date.strftime('%Y-%m-%d')} (offset: {day_offset})")
+            
+            # Fetch first page
+            data = self.fetch_page(departure_code, checkin_beg, checkin_end, 1)
+            
+            if data and isinstance(data, list) and len(data) > 0:
+                item = data[0]
+                
+                if 'prices' in item:
+                    prices = item['prices']
+                    print(f"  Found {len(prices)} hotels on page 1")
+                    
+                    # Parse hotels from first page
+                    for price_data in prices:
+                        hotel = self.parse_hotel(price_data, departure_code, checkin_date.strftime('%Y-%m-%d'))
+                        all_hotels.append(hotel)
+                    
+                    # Get total pages and fetch remaining
+                    pages = item.get('pages', 1)
+                    print(f"  Total pages: {pages}")
+                    
+                    for page in range(2, min(pages + 1, 20)):  # Limit to 20 pages
+                        print(f"  Fetching page {page}...")
+                        data = self.fetch_page(departure_code, checkin_beg, checkin_end, page)
+                        
+                        if data and isinstance(data, list) and len(data) > 0 and 'prices' in data[0]:
+                            prices = data[0]['prices']
+                            print(f"    Found {len(prices)} hotels")
+                            
+                            for price_data in prices:
+                                hotel = self.parse_hotel(price_data, departure_code, checkin_date.strftime('%Y-%m-%d'))
+                                all_hotels.append(hotel)
+                        
+                        time.sleep(0.5)  # Rate limiting
+                else:
+                    print(f"  No prices found in response")
+            else:
+                print(f"  No data returned")
+            
+            time.sleep(1)  # Rate limiting between dates
+        
+        return all_hotels
+    
+    def scrape_all_departures(self, days_range=365):
+        """Scrape hotels for all departure airports.
+        
+        Args:
+            days_range: Number of days to check (default 365)
+            
+        Returns:
+            list: Combined list of all hotels
+        """
+        all_results = []
+        
+        for dep_code in self.departures.keys():
+            hotels = self.scrape_date_range(dep_code, days_range)
+            all_results.extend(hotels)
+        
+        return all_results
+    
+    def save_to_json(self, filename="turkey_hotels_all.json"):
+        """Save results to JSON file.
+        
+        Args:
+            filename: Output filename
+        """
         os.makedirs('data', exist_ok=True)
         filepath = f'data/{filename}'
-        
-        data = {
-            'hotels': hotels,
-            'total': len(hotels),
-            'scraped_at': datetime.now().isoformat(),
-            'parameters': {
-                'departures': list(self.departures.keys()),
-                'nights': 7,
-                'days_range': 365,
-                'board_types': self.board_types,
-                'note': 'These are sample hotels. Full extraction requires browser automation.'
-            }
-        }
         
         with open(filepath, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
+            json.dump({
+                'hotels': self.all_hotels,
+                'total': len(self.all_hotels),
+                'scraped_at': datetime.now().isoformat(),
+                'parameters': {
+                    'departures': list(self.departures.keys()),
+                    'nights': 7,
+                    'days_range': 365,
+                    'meal_plans': list(self.meal_plans.keys())
+                }
+            }, f, indent=2, ensure_ascii=False)
         
-        print(f"Saved {len(hotels)} hotels to {filepath}")
+        print(f"\nSaved {len(self.all_hotels)} hotels to {filepath}")
     
-    def save_to_csv(self, hotels, filename="turkey_hotels_complete.csv"):
-        """Save hotel data to CSV file."""
+    def save_to_csv(self, filename="turkey_hotels_all.csv"):
+        """Save results to CSV file.
+        
+        Args:
+            filename: Output filename
+        """
         os.makedirs('data', exist_ok=True)
         filepath = f'data/{filename}'
         
-        if not hotels:
+        if not self.all_hotels:
             print("No hotel data to save")
             return
         
-        keys = hotels[0].keys()
+        keys = self.all_hotels[0].keys()
         with open(filepath, 'w', newline='', encoding='utf-8') as f:
             writer = csv.DictWriter(f, fieldnames=keys)
             writer.writeheader()
-            writer.writerows(hotels)
+            writer.writerows(self.all_hotels)
         
         print(f"Saved CSV to {filepath}")
     
-    def print_summary(self, hotels):
-        """Print summary of hotel data."""
-        print("\n" + "="*60)
-        print("TURKEY HOTELS - SCRAPING SUMMARY")
-        print("="*60)
-        print(f"Total hotels: {len(hotels)}")
-        print(f"Scraped at: {datetime.now().isoformat()}")
+    def print_summary(self):
+        """Print summary of scraped results."""
+        print(f"\n{'='*60}")
+        print(f"SCRAPING SUMMARY")
+        print(f"{'='*60}")
+        print(f"Total hotels found: {len(self.all_hotels)}")
         
-        # Group by location
-        by_location = {}
-        for h in hotels:
-            loc = h.get('location', 'Unknown')
-            by_location[loc] = by_location.get(loc, 0) + 1
+        # By departure
+        by_departure = {}
+        for h in self.all_hotels:
+            dep = h.get('departure', 'Unknown')
+            by_departure[dep] = by_departure.get(dep, 0) + 1
         
-        print(f"\nBy location:")
-        for loc, count in sorted(by_location.items(), key=lambda x: x[1], reverse=True):
-            print(f"  {loc}: {count} hotels")
+        print(f"\nBy departure:")
+        for dep, count in by_departure.items():
+            print(f"  {dep}: {count} hotels")
         
-        # Group by board type
-        by_board = {}
-        for h in hotels:
-            board = h.get('board_type', 'Unknown')
-            by_board[board] = by_board.get(board, 0) + 1
+        # By meal plan
+        by_meal = {}
+        for h in self.all_hotels:
+            meal = h.get('meal_plan', 'Unknown')
+            by_meal[meal] = by_meal.get(meal, 0) + 1
         
-        print(f"\nBy board type:")
-        for board, count in sorted(by_board.items(), key=lambda x: x[1], reverse=True):
-            print(f"  {board}: {count} hotels")
+        print(f"\nBy meal plan:")
+        for meal, count in sorted(by_meal.items(), key=lambda x: x[1], reverse=True):
+            print(f"  {meal}: {count} hotels")
+        
+        # By star rating
+        by_star = {}
+        for h in self.all_hotels:
+            star = h.get('star_rating', 'Unknown')
+            by_star[star] = by_star.get(star, 0) + 1
+        
+        print(f"\nBy star rating:")
+        for star, count in sorted(by_star.items(), key=lambda x: x[1], reverse=True):
+            print(f"  {star}: {count} hotels")
         
         # Price range
-        prices = [int(h['price']) for h in hotels if h.get('price')]
+        prices = [h['price'] for h in self.all_hotels if h.get('price')]
         if prices:
-            print(f"\nPrice range: {min(prices):,} - {max(prices):,} DKK")
-            print(f"Average price: {sum(prices)/len(prices):,.0f} DKK")
+            print(f"\nPrice range: {min(prices):,.2f} - {max(prices):,.2f} EUR")
+            print(f"Average price: {sum(prices)/len(prices):,.2f} EUR")
+    
+    def print_sample_hotels(self, count=10):
+        """Print sample hotels.
         
-        print("\n" + "="*60)
-        print("HOTEL LISTINGS")
-        print("="*60)
+        Args:
+            count: Number of hotels to print
+        """
+        print(f"\n{'='*60}")
+        print(f"SAMPLE HOTELS ({count})")
+        print(f"{'='*60}")
         
-        for hotel in hotels:
-            print(f"\n{hotel['name']}")
-            print(f"  Location: {hotel['location']}")
-            print(f"  Price: {hotel['price']},- DKK (was {hotel['original_price']},-)")
-            print(f"  Room: {hotel['room_type']} ({hotel['board_type']})")
-            print(f"  Temperature: {hotel['temperature']}°C")
-            if hotel['few_spots_left']:
-                print(f"  ⚠️  Few spots left!")
+        for h in self.all_hotels[:count]:
+            print(f"\n{h['name']} ({h['star_rating']})")
+            print(f"  Meal: {h['meal_plan']}, Room: {h['room_type']}")
+            print(f"  Price: {h['price']:.2f} EUR (was {h['original_price']:.2f})")
+            print(f"  Departure: {h['departure']}, Date: {h['check_in']}")
 
 
 def main():
     """Main execution function."""
     scraper = NeckermannTurkeyScraper()
     
-    # Get sample hotels
-    hotels = scraper.get_sample_hotels()
+    print("Neckermann Nordic Turkey Hotel Scraper")
+    print("="*60)
+    print("Configuration:")
+    print(f"  - Days: 365")
+    print(f"  - Nights: 7")
+    print(f"  - Departures: {', '.join(scraper.departures.keys())}")
+    print(f"  - Meal Plans: All (RO, BB, HB, AI, UAI)")
+    print(f"  - Destination: Turkey")
+    print("="*60)
+    
+    # Scrape all hotels
+    print("\nStarting scraper...")
+    print("This will take approximately 5-10 minutes...")
+    
+    scraper.all_hotels = scraper.scrape_all_departures(days_range=365)
     
     # Save data
-    scraper.save_to_json(hotels)
-    scraper.save_to_csv(hotels)
+    scraper.save_to_json('turkey_hotels_365days.json')
+    scraper.save_to_csv('turkey_hotels_365days.csv')
     
     # Print summary
-    scraper.print_summary(hotels)
-    
-    # Print API documentation
-    print("\n" + "="*60)
-    print("API URL EXAMPLES")
-    print("="*60)
-    
-    # Example URLs for different configurations
-    today = datetime.now().strftime('%Y%m%d')
-    
-    for dep_code in ['CPH', 'AAL', 'BLL']:
-        url = scraper.build_search_url(dep_code, today)
-        print(f"\n{dep_code}: {url}")
+    scraper.print_summary()
+    scraper.print_sample_hotels(10)
     
     print("\n" + "="*60)
-    print("NOTES FOR FULL EXTRACTION")
+    print("Scraping completed!")
     print("="*60)
-    print("""
-The Neckermann Nordic website uses React Server Components that load hotel data
-dynamically via JavaScript after the initial page load. This means:
-
-1. Simple HTTP requests (like requests.get) won't get the hotel data
-2. The data is streamed in chunks after the page loads
-3. To get ALL hotels for ALL dates, you need:
-
-   a) Browser Automation (Recommended):
-      - Use Selenium, Playwright, or Puppeteer
-      - Wait for the page to fully load (wait for loading indicators to disappear)
-      - Extract hotel data from the rendered DOM
-      - Scroll down to load more hotels if pagination/infinite scroll is used
-      - Iterate through all dates and departures
-
-   b) API Endpoint Discovery:
-      - Monitor network requests in browser DevTools
-      - Find the actual API endpoint that serves hotel data
-      - Call the API directly with proper headers
-
-   c) Browser DevTools Export:
-      - Open the search page in a browser
-      - Wait for hotels to load
-      - Use browser console to extract data as JSON
-      - Save the extracted data
-
-For 365 days coverage with 3 departures and all meal plans:
-- You'll need to check approximately 52 dates (365/7)
-- For each date, check 3 departures
-- For each departure, the site shows available board types automatically
-- Total API calls: ~156 (52 dates × 3 departures)
-
-The parameters you specified:
-- TOWNFROM: 1962 (AAL), 1941 (CPH), 1964 (BLL) ✓
-- STATE: 9 (Turkey) ✓
-- NIGHTMIN/MAX: 7 (7 nights) ✓
-- CHECKIN_BEG/END: Date range (use 365 days) ✓
-    """)
 
 
 if __name__ == "__main__":
