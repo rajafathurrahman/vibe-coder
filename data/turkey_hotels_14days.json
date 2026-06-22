@@ -1,0 +1,14 @@
+{
+  "hotels": [],
+  "total": 0,
+  "scraped_at": "2026-06-22T11:23:24.840404",
+  "parameters": {
+    "departures": [
+      "AAL",
+      "CPH",
+      "BLL"
+    ],
+    "nights": 7,
+    "days_range": 365
+  }
+}
